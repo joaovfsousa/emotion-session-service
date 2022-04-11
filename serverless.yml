@@ -1,0 +1,28 @@
+service: session-service
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.8
+  timeout: 5
+  memorySize: 128
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+          Resource: "arn:aws:dynamodb:*:*:table/user_sessions"
+
+functions:
+  login:
+    handler: handler.get_session
+    events:
+      - httpApi:
+          path: /session
+          method: get
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
