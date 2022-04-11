@@ -21,6 +21,7 @@ functions:
       - httpApi:
           path: /session
           method: get
+          cors: true
 
 plugins:
   - serverless-offline
